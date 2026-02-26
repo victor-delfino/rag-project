@@ -1,0 +1,28 @@
+# Ambiente virtual Python
+.venv/
+venv/
+env/
+
+# Variáveis de ambiente (NUNCA commitar API keys)
+.env
+
+# Cache do Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Distribuição / packaging
+dist/
+build/
+*.egg-info/
+
+# IDEs
+.vscode/
+.idea/
+
+# Vector store local (ChromaDB — gerado pelo scripts/ingest.py)
+vector_store/
+
+# Dados temporários
+*.tmp
