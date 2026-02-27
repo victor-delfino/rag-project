@@ -12,6 +12,7 @@ dependencies = [
     "langchain-huggingface>=1.0.0",  # Embeddings locais (sentence-transformers)
     "langchain-chroma>=1.0.0",      # Vector store: ChromaDB local
     "langchain-community>=0.4.0",   # Document loaders e ferramentas
+    "mcp[cli]>=1.0.0",              # MCP: Model Context Protocol server
 ]
 
 [project.optional-dependencies]

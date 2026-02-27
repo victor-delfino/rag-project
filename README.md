@@ -14,6 +14,7 @@ usando Retrieval-Augmented Generation (RAG) com LangChain e memória conversacio
 - **LangChain** — Orquestração com LCEL (LangChain Expression Language)
 - **ChromaDB** — Vector store local (via langchain-chroma)
 - **HuggingFace** — Embeddings locais (all-MiniLM-L6-v2, via langchain-huggingface)
+- **MCP** — Model Context Protocol (expõe RAG como servidor de ferramentas)
 
 ## Setup rápido
 
@@ -50,12 +51,14 @@ python scripts/ask.py
 ```
 src/
 ├── config/          → Configurações centralizadas (Settings dataclass)
-└── langchain_rag/   → Pipeline RAG com LangChain
-    ├── llm.py       → Configuração do LLM (ChatGroq)
-    ├── embeddings.py→ Modelo de embeddings local (HuggingFace)
-    ├── ingestion.py → Carregamento e chunking de documentos
-    ├── retrieval.py → Vector store (ChromaDB) e retriever
-    └── chain.py     → Chains LCEL com memória conversacional
+├── langchain_rag/   → Pipeline RAG com LangChain
+│   ├── llm.py       → Configuração do LLM (ChatGroq)
+│   ├── embeddings.py→ Modelo de embeddings local (HuggingFace)
+│   ├── ingestion.py → Carregamento e chunking de documentos
+│   ├── retrieval.py → Vector store (ChromaDB) e retriever
+│   └── chain.py     → Chains LCEL com memória conversacional
+└── mcp_server/      → Servidor MCP (Model Context Protocol)
+    └── server.py    → Tools: search, ask, list_documents
 
 scripts/
 ├── ingest.py        → Indexação de documentos no vector store
@@ -88,11 +91,43 @@ Comandos disponíveis:
 - `limpar` — Limpa histórico
 - `sair` — Encerra
 
+### MCP Server
+
+O servidor MCP expõe o RAG como ferramentas que qualquer cliente MCP pode consumir (Claude Desktop, VS Code, etc.).
+
+**Tools disponíveis:**
+
+| Tool | Descrição |
+|------|-----------|
+| `search_documents` | Busca semântica nos documentos (sem LLM) |
+| `ask_question` | Pergunta com RAG completo (retrieval + LLM) |
+| `list_documents` | Lista documentos indexados |
+
+**Uso com MCP Inspector (debug):**
+
+```bash
+mcp dev src/mcp_server/server.py
+```
+
+**Configuração para Claude Desktop** (`claude_desktop_config.json`):
+
+```json
+{
+  "mcpServers": {
+    "rag-project": {
+      "command": "python",
+      "args": ["src/mcp_server/server.py"],
+      "cwd": "C:/caminho/para/rag-project"
+    }
+  }
+}
+```
+
 ## Fases do projeto
 
 - [x] Fase 1 — Fundamentos conceituais
 - [x] Fase 2 — Setup e primeira interação com LLM
 - [x] Fase 3 — RAG básico (manual, removido)
 - [x] Fase 4 — LangChain em profundidade
-- [ ] Fase 5 — MCP (Model Context Protocol)
+- [x] Fase 5 — MCP (Model Context Protocol)
 - [ ] Fase 6 — Evolução e produção
