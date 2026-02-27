@@ -20,7 +20,7 @@ usando Retrieval-Augmented Generation (RAG) com LangChain e memória conversacio
 
 ```bash
 # 1. Clone o repositório
-git clone https://github.com/<seu-usuario>/rag-project.git
+git clone https://github.com/victor-delfino/rag-project.git
 cd rag-project
 
 # 2. Crie o ambiente virtual
@@ -107,6 +107,20 @@ O servidor MCP expõe o RAG como ferramentas que qualquer cliente MCP pode consu
 
 ```bash
 mcp dev src/mcp_server/server.py
+```
+
+**Configuração para VS Code (Copilot)** — já inclusa em `.vscode/mcp.json`:
+
+```json
+{
+  "servers": {
+    "rag-project": {
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": ["src/mcp_server/server.py"],
+      "cwd": "${workspaceFolder}"
+    }
+  }
+}
 ```
 
 **Configuração para Claude Desktop** (`claude_desktop_config.json`):

@@ -26,3 +26,6 @@ vector_store/
 
 # Dados temporários
 *.tmp
+
+# uv (gerado automaticamente)
+uv.lock
